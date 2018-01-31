@@ -20,23 +20,23 @@ document.addEventListener("keyup", keyUpHandler);
 
 function keyUpHandler(e) {
     if(e.keyCode == 37){
-      leftPressed == false;
-      console.log(e.keyCode + "leftReleased");
+      leftPressed = false;
+      // console.log(e.keyCode + " leftReleased " + leftReleased);
     }
     else if(e.keyCode == 39){
-      rightPressed == false;
-      console.log(e.keyCode + "rightReleased");
+      rightPressed = false;
+      // console.log(e.keyCode + " rightReleased " + rightReleased);
     }
 }
 
 function keyDownHandler(e){
   if(e.keyCode == 37){
-    leftPressed == true;
-    console.log(e.keyCode + "leftPressed");
+    leftPressed = true;
+    // console.log(e.keyCode + " leftPressed " + leftPressed);
   }
   else if(e.keyCode == 39) {
-    rightPressed == true;
-    console.log(e.keyCode + "rightPressed");
+    rightPressed = true;
+    // console.log(e.keyCode + " rightPressed " + rightPressed);
   }
 }
 
@@ -46,8 +46,19 @@ function drawMovingBall(){
   drawPaddle();
   //console.log(x+" "+y);
   // var cir = new circle(x, y, 10, 'black');
-  if(y + dy > canvas.height-10 || y + dy < 10){
+  if(y + dy < 10){
     dy = -dy;
+  }
+  else if(y + dy > canvas.height-10){
+    if(x > paddleX && x < paddleX + paddleWidth){
+      dy = -dy;
+    }
+    else{
+      alert("GameOver");
+      document.location.reload();
+    }
+    // alert("Game Over");
+    // document.location.reload();
   }
   if( x + dx > canvas.width-10 || x + dx < 10){
     dx = -dx;
@@ -55,10 +66,11 @@ function drawMovingBall(){
 
   if(leftPressed && paddleX > 0){
     paddleX -= 7;
-    console.log("left drawPaddle");
+    // console.log("left drawPaddle");
   }
   if(rightPressed && paddleX < canvas.width - paddleWidth){
     paddleX += 7;
+    // console.log("right drawPaddle");
   }
 
   x += dx;
